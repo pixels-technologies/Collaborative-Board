@@ -61,7 +61,7 @@ board/
 │   └── package.json
 ├── docker-compose.yml  # Container orchestration
 └── README.md           # Project documentation
-
+```
 ## 🗺️ Development Roadmap
 
 ### Phase 1: Foundation & Authentication
@@ -124,5 +124,4 @@ docker-compose up --build
 
 
 
-```
 
