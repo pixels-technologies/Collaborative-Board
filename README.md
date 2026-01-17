@@ -1,25 +1,36 @@
-# 🎨 Board: Real-Time Collaborative Whiteboard
+# 🎨 Board: Next-Gen Collaborative Whiteboard
 
-**A production-grade collaborative workspace built with Django, React, and Generative AI.**
+**A production-grade, real-time workspace built with Django, React, and Generative AI.**
 
 ## 📖 Overview
-Board is a real-time collaborative whiteboard that allows multiple users to draw, brainstorm, and organize ideas simultaneously. Unlike simple drawing apps, Board utilizes **WebSockets** for millisecond-latency updates and integrates **Generative AI** to enhance productivity—automatically correcting rough hand-drawn shapes and summarizing whiteboard contents into actionable text.
+**Board** is a SaaS-ready collaborative platform that allows teams to brainstorm, draw, and organize ideas simultaneously. It goes beyond simple drawing apps by integrating **Enterprise-Grade Security** (Waiting Rooms, RBAC) and **Generative AI** tools that enhance productivity.
+
+Built as a modern Monorepo, it utilizes **WebSockets** for millisecond-latency updates and **Docker** for scalable deployment.
+
+---
 
 ## 🚀 Key Features
 
-### ⚡ Real-Time Collaboration (The Core)
-* **Live Multi-User Drawing:** Users see each other's cursors and strokes instantly.
-* **Conflict Resolution:** Handles high-concurrency updates using Redis and Django Channels.
-* **Vector-Based Storage:** Stores shapes as mathematical coordinates (not just pixels) in PostgreSQL, allowing for infinite resizing and editing.
+### 🔐 Security & Room Management (SaaS Layer)
+* **Granular Room Privacy:**
+  * **Public Rooms:** Open to anyone with the link.
+  * **Private Rooms:** Restricted to specific registered users (Invite-Only).
+  * **Protected Rooms:** Accessible via a shared password.
+* **The "Waiting Room":** A moderation queue where the Host must explicitly **Accept** or **Deny** join requests before a user can see the canvas.
+* **Role-Based Access Control (RBAC):**
+  * **Host:** Full control (manage waiting room, ban users, delete board, change settings).
+  * **Editor:** Can draw, add notes, and upload images.
+  * **Viewer:** Read-only access (perfect for presentations or classes).
+
+### ⚡ Real-Time Collaboration
+* **Live Multi-User Sync:** Users see each other's cursors and drawing strokes instantly via **Django Channels**.
+* **Vector-Based Infinite Canvas:** Drawings are stored as mathematical vector coordinates (not pixels), allowing for infinite zooming and re-editing.
+* **Integrated Chat:** Real-time text messaging sidebar for team communication alongside the whiteboard.
+* **Conflict Resolution:** Handles high-concurrency updates using Redis to prevent data overwrites.
 
 ### 🧠 AI-Powered Tools (The "2026 Standard")
-* **✨ Smart Shape Recognition:** Draws a rough square or circle? The system instantly snaps it to a perfect geometric shape using geometric logic algorithms.
-* **🤖 Board Summarization:** Users can click "Summarize," and the system uses an LLM (Gemini/OpenAI) to read text nodes on the board and generate a structured summary of the brainstorming session.
-
-### 🛠️ Engineering Highlights
-* **Architecture:** Monorepo containing a decoupled Django REST Framework backend and React frontend.
-* **DevOps:** Fully containerized with Docker and Docker Compose.
-* **Deployment:** Nginx reverse proxy configuration for handling both HTTP (API) and WebSocket (WSS) connections securely.
+* **✨ Smart Shape Recognition:** Draws a messy circle or square? The system utilizes geometric algorithms to instantly "snap" it into a perfect shape.
+* **🤖 Intelligent Summarization:** Users can click "Summarize Board," and the system uses an LLM (Gemini API) to read all text notes on the canvas and generate a structured meeting summary.
 
 ---
 
@@ -27,28 +38,26 @@ Board is a real-time collaborative whiteboard that allows multiple users to draw
 
 | Component | Technology | Purpose |
 | :--- | :--- | :--- |
-| **Frontend** | React + Vite | UI and Canvas manipulation (Konva.js / HTML5 Canvas). |
-| **Backend** | Django + DRF | API endpoints and business logic. |
-| **Real-Time** | Django Channels | WebSocket consumer handling. |
+| **Frontend** | React + Vite | Interactive UI and Canvas manipulation (Konva.js). |
+| **Backend** | Django + DRF | REST API for Auth, Rooms, and AI endpoints. |
+| **Real-Time** | Django Channels | WebSocket consumer handling for live drawing. |
 | **Message Broker** | Redis | Distributing WebSocket messages across workers. |
-| **Database** | PostgreSQL | Persistent storage of user data and vector shapes. |
-| **AI Integration** | Gemini API | Processing text for board summarization. |
+| **Database** | PostgreSQL | Persistent storage of Users, Rooms, and Vector Data. |
+| **AI Integration** | Gemini API | Processing text for automated board summarization. |
+| **Infrastructure** | Docker | Containerization for Nginx, Backend, and Database. |
 
 ---
 
-## 🗺️ Development Roadmap
+## 📂 Project Structure
 
-### Phase 1: The Foundation
-- [ ] Set up Monorepo (Django + React).
-- [ ] Configure Docker & PostgreSQL.
-- [ ] Implement basic WebSocket connection (Django Channels).
-
-### Phase 2: Collaboration Engine
-- [ ] Build the infinite canvas in React.
-- [ ] Sync drawing data via WebSockets (Broadcast updates).
-- [ ] Implement Redis layer for performance.
-
-### Phase 3: AI & Polish
-- [ ] Implement "Smart Shape" logic (Client-side).
-- [ ] Integrate "Summarize" feature (Server-side LLM).
-- [ ] Deploy to production (Hetzner/AWS).
+```text
+board/
+├── backend/            # Django Project (DRF + Channels)
+│   ├── board_project/  # Core settings
+│   ├── api/            # REST API endpoints
+│   └── chat/           # WebSocket logic
+├── frontend/           # React Project (Vite)
+│   ├── src/
+│   └── package.json
+├── docker-compose.yml  # Container orchestration
+└── README.md           # Project documentation
