@@ -105,7 +105,7 @@ board/
 
 1. **Clone the repo:**
 ```bash
-git clone [https://github.com/yourusername/Collaborative-Board.git](https://github.com/yourusername/Collaborative-Board.git)
+git clone https://github.com/pixels-technologies/Collaborative-Board
 cd board
 
 ```
