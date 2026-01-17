@@ -61,3 +61,68 @@ board/
 │   └── package.json
 ├── docker-compose.yml  # Container orchestration
 └── README.md           # Project documentation
+
+## 🗺️ Development Roadmap
+
+### Phase 1: Foundation & Authentication
+
+* [x] Initialize Monorepo structure.
+* [ ] Configure Docker, PostgreSQL, and Redis.
+* [ ] **User System:** Implement JWT Authentication (Login/Register).
+* [ ] **Profile Management:** Allow users to manage their identity.
+
+### Phase 2: The Real-Time Engine (MVP)
+
+* [ ] Build the interactive canvas in React.
+* [ ] **WebSocket Setup:** Configure Django Channels for live data transmission.
+* [ ] **Broadcasting:** Ensure User A sees User B's strokes instantly.
+* [ ] **Persistence:** Save drawing data to PostgreSQL.
+
+### Phase 3: Advanced Room Logic
+
+* [ ] **Room Types:** Implement Public vs. Private vs. Protected logic.
+* [ ] **Waiting Room:** Build the "Knock" and "Accept/Deny" backend logic.
+* [ ] **Permissions:** Create Middleware to enforce Host/Editor/Viewer rules.
+* [ ] **Invitations:** Ability to invite specific users by email/username.
+
+### Phase 4: AI & Polish
+
+* [ ] **Smart Shapes:** Implement client-side geometric correction.
+* [ ] **AI Summarization:** Connect Backend to Gemini API for text processing.
+* [ ] **Deployment:** Final production build with Nginx reverse proxy.
+
+---
+
+## 🛠️ Getting Started
+
+### Prerequisites
+
+* Docker & Docker Compose
+* Node.js (v18+)
+* Python (v3.10+)
+
+### Quick Start
+
+1. **Clone the repo:**
+```bash
+git clone [https://github.com/yourusername/Collaborative-Board.git](https://github.com/yourusername/Collaborative-Board.git)
+cd board
+
+```
+
+
+2. **Run with Docker:**
+```bash
+docker-compose up --build
+
+```
+
+
+3. **Access the app:**
+* Frontend: `http://localhost:5173`
+* Backend API: `http://localhost:8000`
+
+
+
+```
+
