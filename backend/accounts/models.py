@@ -9,10 +9,15 @@ class CustomUserManager(BaseUserManager):
         
         if not email:
             raise ValueError('The Email field must be set')
+        if not password:
+            raise ValueError("The password must be set")
+        
         # normalize_email() keeps the entered email in lower cases
         email = self.normalize_email(email)
+        
         # self.model equates to User() class
         user = self.model(email=email, **extra_fields)
+        
         # Contains Hash logic for the password
         user.set_password(password)
         user.save(using=self._db)
