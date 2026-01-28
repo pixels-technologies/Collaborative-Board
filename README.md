@@ -13,7 +13,7 @@ Built as a modern Monorepo, it utilizes **WebSockets** for millisecond-latency u
 
 For a detailed look at the database relationships and table structures, please view the full schema documentation:
 
-👉 [**View Database Schema**](ddatabase_schema/markup.md)
+👉 [**View Database Schema**](database_schema/markup.md)
 
 ## 🚀 Key Features
 
