@@ -1,3 +1,4 @@
+
 # 🎨 Board: Next-Gen Collaborative Whiteboard
 
 **A production-grade, real-time workspace built with Django, React, and Generative AI.**
@@ -8,6 +9,11 @@
 Built as a modern Monorepo, it utilizes **WebSockets** for millisecond-latency updates and **Docker** for scalable deployment.
 
 ---
+## 🗄️ Database Schema
+
+For a detailed look at the database relationships and table structures, please view the full schema documentation:
+
+👉 [**View Database Schema**](ddatabase_schema/markup.md)
 
 ## 🚀 Key Features
 
