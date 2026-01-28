@@ -1,0 +1,139 @@
+enum WorkspaceMemberRole {
+	admin
+	"moderator "
+	member
+}
+
+
+
+enum BoardMemberRole {
+	"viewer "
+	editor
+}
+
+
+
+enum JoinAccessLevel {
+	restricted
+	open
+}
+
+
+
+enum BoardVisibility {
+	private
+	workspace
+}
+
+Table User [headercolor: #175e7a] {
+	id bigint [ pk, increment, unique ]
+	email varchar [ not null ]
+	password varchar [ not null ]
+	first_name varchar [ not null ]
+	last_name varchar [ not null ]
+	is_staff boolean [ not null, default: false ]
+	is_active boolean [ not null, default: false ]
+	is_banned boolean [ not null, default: false ]
+	date_joined timestamp [ not null ]
+	last_login timestamp [ not null ]
+	updated_at timestamp [ not null ]
+	history varchar [ not null, note: 'HistoricalRecords()' ]
+}
+
+Table Profile [headercolor: #175e7a] {
+	user_id bigint [ pk, not null, unique ]
+	bio varchar
+	avatar varchar
+}
+
+Table Workspace [headercolor: #1366a1] {
+	id bigint [ pk, increment, not null, unique ]
+	name varchar [ not null ]
+	description varchar [ not null ]
+	slug varchar [ not null ]
+	logo varchar
+	invite_code varchar [ note: 'implemented with TTL' ]
+	history varchar [ not null ]
+	join_access_level joinaccesslevel [ not null, default: open ]
+	created_at timestamp
+	updated_at timestamp
+}
+
+Table WorkspaceMember [headercolor: #175e7a] {
+	id bigint [ pk, increment, not null, unique ]
+	user_id bigint [ not null ]
+	workspace_id bigint [ not null ]
+	role workspacememberrole [ not null, default: member ]
+
+	indexes {
+		(user_id, workspace_id) [ name: 'unique_workspace_membership', unique ]
+	}
+}
+
+Table Board [headercolor: #175e7a] {
+	id bigint [ pk, increment, not null, unique ]
+	workspace_id bigint [ not null ]
+	title varchar [ not null ]
+	created_at timestamp
+	updated_at timestamp
+	visibility boardvisibility [ default: private ]
+	history varchar [ not null, note: 'HistoricalRecords()' ]
+	default_viewport_settings json [ note: '''When a board first time opens for a user, it’s unclear where the user should be looking (center, top-left, etc.).
+A simple fix is to save the last camera position and restore it on load.
+We can store this in a viewport_settings JSON on the Board (x, y, zoom).''' ]
+}
+
+Table BoardMember [headercolor: #175e7a] {
+	id bigint [ pk, increment, not null, unique ]
+	user_id bigint [ not null ]
+	board_id bigint [ not null ]
+	role boardmemberrole [ not null, default: viewer ]
+	viewport_settings json [ note: 'viewport_settings for each user' ]
+
+	indexes {
+		(user_id, board_id) [ name: 'unique_board_membership', unique ]
+	}
+}
+
+Table BoardElement [headercolor: #175e7a] {
+	id bigint [ pk, increment, not null, unique ]
+	board_id bigint [ not null ]
+	user_id bigint
+	data json [ not null ]
+	created_at timestamp [ not null ]
+	z_index integer [ not null ]
+	is_recognized boolean [ not null, default: false ]
+	type varchar [ not null, note: 'Type of the element for fast quries lockup (stroke , text , image , circle , etcs ..)' ]
+}
+
+Ref fk_Workspace_id_WorkspaceMember {
+	Workspace.id < WorkspaceMember.workspace_id [ delete: cascade, update: cascade ]
+}
+
+Ref fk_User_id_WorkspaceMember {
+	User.id < WorkspaceMember.user_id [ delete: cascade, update: cascade ]
+}
+
+Ref fk_Workspace_id_Board {
+	Workspace.id < Board.workspace_id [ delete: cascade, update: cascade ]
+}
+
+Ref fk_Board_id_BoardMember {
+	Board.id < BoardMember.board_id [ delete: cascade, update: cascade ]
+}
+
+Ref fk_User_id_BoardMember {
+	User.id < BoardMember.user_id [ delete: cascade, update: cascade ]
+}
+
+Ref fk_User_id_BoardElement {
+	User.id < BoardElement.user_id [ delete: cascade, update: set null ]
+}
+
+Ref fk_Profile_user_id_User {
+	Profile.user_id - User.id [ delete: cascade, update: cascade ]
+}
+
+Ref fk_Board_id_BoardElement {
+	Board.id < BoardElement.board_id [ delete: cascade, update: cascade ]
+}
