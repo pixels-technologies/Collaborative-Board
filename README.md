@@ -11,17 +11,20 @@ Built as a modern Monorepo, it utilizes **WebSockets** for millisecond-latency u
 
 ## 🚀 Key Features
 
-### 🔐 Security & Room Management (SaaS Layer)
-* **Granular Room Privacy:**
-  * **Public Rooms:** Open to anyone with the link.
-  * **Private Rooms:** Restricted to specific registered users (Invite-Only).
-  * **Protected Rooms:** Accessible via a shared password.
-* **The "Waiting Room":** A moderation queue where the Host must explicitly **Accept** or **Deny** join requests before a user can see the canvas.
-* **Role-Based Access Control (RBAC):**
-  * **Host:** Full control (manage waiting room, ban users, delete board, change settings).
-  * **Editor:** Can draw, add notes, and upload images.
-  * **Viewer:** Read-only access (perfect for presentations or classes).
+### 🔐 Security & Room Management & Room Management (SaaS Layer)
 
+* **Granular Room Privacy:**
+* **Workspace Rooms:** Visible and accessible to all registered members of the workspace.
+* **Private Rooms:** Hidden and restricted to specific users (Invite-Only).
+* **Public Rooms:** Open to external guests or anyone with the link.
+
+
+* **The "Waiting Room":** A moderation queue where the Host must explicitly **Accept** or **Deny** join requests before a user can see the canvas.
+* **Global Admin Privileges:** Workspace Admins have super-user access to view **all** boards (including Private ones) and have the authority to accept/deny users in any Waiting Room.
+* **Role-Based Access Control (RBAC):**
+* **Host:** Full board control (manage waiting room, ban users, delete board, change settings).
+* **Editor:** Can draw, add notes, and upload images.
+* **Viewer:** Read-only access (perfect for presentations or classes).
 ### ⚡ Real-Time Collaboration
 * **Live Multi-User Sync:** Users see each other's cursors and drawing strokes instantly via **Django Channels**.
 * **Vector-Based Infinite Canvas:** Drawings are stored as mathematical vector coordinates (not pixels), allowing for infinite zooming and re-editing.
